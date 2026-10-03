@@ -1,41 +1,42 @@
 # Ecommerce Retail Sales Analysis
 
-**Status:** analysis **code and README are ready**; put an order-level CSV in `data/` to run full RFM and charts.
+RFM segmentation on **order-level** data: who buys often, who spends, who went quiet.
 
-This project is about **customer value over time** (RFM + cohorts), not branch KPIs and not mall category mix.
+Sample data is created automatically when you run the script (or put your own CSV in `data/ecommerce_orders.csv`).
+
+This is **not** a claim of “1M+ real transactions”. It is a reproducible RFM workflow you can point at a real export.
 
 ---
 
-## How it differs from my other sales work
+## vs my other projects
 
 | Repo | Focus |
 |------|--------|
-| `supermarket-sales-analysis` | 3 stores, ops + significance tests |
-| `customer-shopping-sales-analysis` | Malls and product categories |
-| `sql-sales-analysis` | Retail KPIs in SQL only |
-| **This repo** | RFM segments, retention cohorts |
+| `supermarket-sales-analysis` | Store branches + significance tests |
+| `customer-shopping-sales-analysis` | Mall categories / demographics |
+| `customer-personality-analysis` | RFM + K-Means + campaign response |
+| **This repo** | Order RFM segments + simple stats |
 
 ---
 
-## Goals
+## Questions
 
-1. Score customers with Recency, Frequency, Monetary
-2. Compare segments with simple stats where useful
-3. Build monthly cohorts by first purchase
-4. Suggest who to protect, win back, or grow
+1. How are customers split by Recency, Frequency, Monetary?
+2. How much revenue sits in Champions vs Hibernating?
+3. Do Champions spend differently from the rest (t-test)?
+4. Which product categories lead in the sample?
 
 ---
 
-## Data you need
+## Data
 
-Place a file at `data/ecommerce_orders.csv` with at least:
+Expected columns:
 
-- `customer_id`
-- `order_id`
-- `order_date`
-- `order_value`
+- `customer_id`, `order_id`, `order_date`, `order_value`
+- optional: `product_category`, `quantity`
 
-Optional: `product_category`, `quantity`.
+Path: `data/ecommerce_orders.csv`  
+If the file is missing, `analysis.py` builds a small sample so the pipeline still runs.
 
 ---
 
@@ -45,24 +46,27 @@ Python · pandas · numpy · matplotlib · seaborn · scipy
 
 ---
 
-## Structure
-
-```
-Ecommerce-Retail-Sales-Analysis/
-├── data/           # add ecommerce_orders.csv here
-├── notebooks/
-├── images/
-├── analysis.py     # RFM + distribution charts
-├── requirements.txt
-└── README.md
-```
+## How to run
 
 ```bash
 pip install -r requirements.txt
 python analysis.py
 ```
 
-Without the CSV, the script exits cleanly and tells you what is missing.
+Charts → `images/`
+
+---
+
+## Structure
+
+```
+Ecommerce-Retail-Sales-Analysis/
+├── data/                 # optional CSV; sample auto-created
+├── images/
+├── analysis.py
+├── requirements.txt
+└── README.md
+```
 
 ---
 
